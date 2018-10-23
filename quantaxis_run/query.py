@@ -6,6 +6,6 @@ def query_result():
         {'status': {'$in': ['failed', 'success']}})]
 
 
-def query_onejob(filename):
+def query_onejob(job_id):
     return [item for item in pymongo.MongoClient().quantaxis.JOB_LOG.find(
-        {'filename': filename})]
+        {'job_id': job_id})]

@@ -27,3 +27,8 @@ from quantaxis_run.query import query_result
 
 print(query_result())
 ```
+
+## 版本记录:
+
+- 1.0 基础的分布式任务
+- 1.1 基于job_id的任务部署/查询
