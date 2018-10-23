@@ -12,3 +12,18 @@ filelist = [
             'E:\\quantaxis\\EXAMPLE\\test_backtest\\example\\simple_backtest_day.py']
 res = [quantaxis_run.delay(item) for item in filelist]
 ```
+
+
+3. 启动任务后台
+
+```
+celery -A quantaxis_run worker --loglevel=info
+```
+
+4. 查看任务
+
+```python
+from quantaxis_run.query import query_result
+
+print(query_result())
+```
