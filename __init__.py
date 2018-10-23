@@ -12,15 +12,14 @@ client_qa.create_index('filename')
 app = Celery('tasks', backend='rpc://', broker='pyamqp://')
 
 
-
 @app.task
-def quantaxis_run(shell_cmd):
+def quantaxis_run(shell_cmd, program='python'):
 
     filename = shell_cmd
-    shell_cmd = 'python "{}"'.format(shell_cmd)
+    shell_cmd = '{} "{}"'.format(program, shell_cmd)
 
     client_qa.insert({
-        'source': 'quantaxis',
+        'source': program,
         'filename': filename,
         'time': str(datetime.datetime.now()),
         'message': 'start',
@@ -49,5 +48,3 @@ def quantaxis_run(shell_cmd):
             'time': str(datetime.datetime.now()),
             'message': str(p.returncode),
             'status': 'failed'})
-
-
