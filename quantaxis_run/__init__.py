@@ -6,7 +6,7 @@ import subprocess
 import pymongo
 import datetime
 
-client_qa = pymongo.MongoClient().quantaxis.JOB_LOG
+client_qa = pymongo.MongoClient().quantaxis.joblog
 client_joblist = pymongo.MongoClient().quantaxis.joblist
 client_qa.create_index('filename')
 app = Celery('tasks', backend='rpc://', broker='pyamqp://')
