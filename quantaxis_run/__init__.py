@@ -1,11 +1,11 @@
-from celery import Celery
+from celery import Celery, platforms
 import os
 import sys
 import shlex
 import subprocess
 import pymongo
 import datetime
-
+platforms.C_FORCE_ROOT = True  # 加上这一行
 client_qa = pymongo.MongoClient().quantaxis.joblog
 client_joblist = pymongo.MongoClient().quantaxis.joblist
 client_qa.create_index('filename')
@@ -47,7 +47,8 @@ def quantaxis_run(self, shell_cmd, program='python'):
             'time': str(datetime.datetime.now()),
             'message': 'backtest run  success',
             'status': 'success'})
-        client_joblist.find_and_modify({'job_id': str(self.request.id)}, {'$set': {'status': 'success'}})
+        client_joblist.find_and_modify({'job_id': str(self.request.id)}, {
+                                       '$set': {'status': 'success'}})
     else:
         client_qa.insert({
             'job_id': str(self.request.id),
