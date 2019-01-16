@@ -26,7 +26,14 @@ celery -A quantaxis_run worker --loglevel=info
 from quantaxis_run.query import query_result
 
 print(query_result())
+
 ```
+5. 查看单个任务
+```python
+from quantaxis_run.query import query_onejob
+query_onejob('08e384e5-302d-4d28-9a5d-7a53cf4cae42') #这里是运行时返回的
+```
+
 
 ## 版本记录:
 
