@@ -1,6 +1,14 @@
-# quantaxis_run
+# QUANTAXIS
 
 quantaxis_run 是基于celery的分布式回测运行代码
+
+attenion: 此模块已经被QUANTAXIS_WEBSERVER集成
+
+```
+POST: http://localhost:8010/command/jobmapper?jobfile=E:\\AGModel\\temp_teststrategy.py
+
+GET: http://localhost:8010/command/jobmapper?job_id=0f9454a5-bdbb-42a3-9159-9fedc39ce0f1
+```
 
 1. 配置好celery以及rabbitmq(需要安装erlang)
 2. 创建一个文件:
