@@ -2,9 +2,9 @@ echo 'deb http://www.rabbitmq.com/debian/ testing main' | sudo tee /etc/apt/sour
 
 wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
 
-sudo apt-get update
+sudo apt-get update -y
 
-sudo apt-get install rabbitmq-server
+sudo apt-get install rabbitmq-server -y
 sudo rabbitmq-plugins enable rabbitmq_management
 
 sudo rabbitmqctl add_user admin admin 
