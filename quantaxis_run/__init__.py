@@ -17,6 +17,20 @@ client_joblist = pymongo.MongoClient().quantaxis.joblist
 client_qa.create_index('filename')
 
 
+schedule_client = pymongo.MongoClient().quantaxis.schedule
+"""schedule
+
+
+
+1. create time
+2. lastupdatetime
+3. command
+4. 
+
+"""
+
+
+
 class celeryconfig():
     broker_url = "pyamqp://"   # 使用redis存储任务队列
     RESULT_BACKEND = "rpc://"  # 使用redis存储结果
@@ -25,7 +39,7 @@ class celeryconfig():
     result_serializer = 'json'
     accept_content = ['json', 'pickle']
     timezone = "Asia/Shanghai"  # 时区设置
-    enable_utc = True
+    enable_utc = False
     worker_hijack_root_logger = False  # celery默认开启自己的日志，可关闭自定义日志，不关闭自定义日志输出为空
     result_expires = 60 * 60 * 24  # 存储结果过期时间（默认1天）
     imports = (
@@ -35,7 +49,7 @@ class celeryconfig():
     beat_schedule = {
         'daily': {
             'task': 'quantaxis_run.monitor_daily',
-            'schedule': timedelta(days=1)
+            'schedule': crontab(minute='50', hour='8,12,15,20')
         },
         'trading': {
             'task': 'quantaxis_run.monitor_trading',
@@ -144,6 +158,9 @@ def run_shell(self, shell_cmd):
 
 @app.task(bind=True)
 def monitor_daily(self):
+    """
+    scan work/ report
+    """
     pass
 
 
