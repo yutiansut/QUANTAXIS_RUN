@@ -32,7 +32,7 @@ LICENSE = "MIT"
 
 setup(
     name=NAME,
-    version='1.3',
+    version='1.5',
     description=DESCRIPTION,
     long_description='automatic run quantaxis program',
     classifiers=[
@@ -41,16 +41,7 @@ setup(
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
     ],
-    install_requires=['celery==3.1.25', 'quantaxis>=1.1.10.dev2'],
-    # entry_points={
-    #     'console_scripts': [
-    #         'quantaxis=QUANTAXIS.QACmd:QA_cmd',
-    #         'quantaxisd=QUANTAXIS.QAWeb.QA_Web:main',
-    #         'quantaxisq=QUANTAXIS.QAFetch.QATdx_adv:bat',
-    #         'qarun=QUANTAXIS.QACmd.runner:run'
-    #     ]
-    # },
-    # install_requires=requirements,
+    install_requires=['celery', 'quantaxis>=1.3.1'],
     keywords=KEYWORDS,
     author=AUTHOR,
     author_email=AUTHOR_EMAIL,
