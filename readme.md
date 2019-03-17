@@ -21,6 +21,13 @@ res = [quantaxis_run.delay(item) for item in filelist]
 celery -A quantaxis_run worker --loglevel=info
 ```
 
+如果是celery 4
+
+```
+pip install eventlet
+celery -A quantaxis_run worker --loglevel=info -P eventlet
+```
+
 4. 查看任务
 
 ```python
