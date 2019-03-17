@@ -37,7 +37,8 @@ class celeryconfig():
     task_default_queue = 'default'
     task_serializer = 'json'
     result_serializer = 'json'
-    accept_content = ['json', 'pickle']
+    accept_content = ['application/json']
+    # task_compression ='gzip'
     timezone = "Asia/Shanghai"  # 时区设置
     enable_utc = False
     worker_hijack_root_logger = False  # celery默认开启自己的日志，可关闭自定义日志，不关闭自定义日志输出为空

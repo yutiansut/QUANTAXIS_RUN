@@ -3,3 +3,10 @@ class realtime_job():
         pass
     def execute(self):
         pass
+
+
+    def risk_control(self):
+        pass
+    
+    def monitor(self):
+        pass
