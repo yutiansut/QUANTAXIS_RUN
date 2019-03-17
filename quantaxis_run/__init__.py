@@ -11,6 +11,7 @@ import shlex
 import subprocess
 import pymongo
 import datetime
+from .job import daily_job, realtime_job
 platforms.C_FORCE_ROOT = True  # 加上这一行
 client_qa = pymongo.MongoClient().quantaxis.joblog
 client_joblist = pymongo.MongoClient().quantaxis.joblist
@@ -28,7 +29,6 @@ schedule_client = pymongo.MongoClient().quantaxis.schedule
 4. 
 
 """
-
 
 
 class celeryconfig():
@@ -161,9 +161,9 @@ def monitor_daily(self):
     """
     scan work/ report
     """
-    pass
+    daily_job().execute()
 
 
 @app.task(bind=True)
 def monitor_trading(self):
-    pass
+    realtime_job().execute()
