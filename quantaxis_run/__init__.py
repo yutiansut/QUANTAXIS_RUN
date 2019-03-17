@@ -11,7 +11,7 @@ import shlex
 import subprocess
 import pymongo
 import datetime
-from .job import daily_job, realtime_job
+
 platforms.C_FORCE_ROOT = True  # 加上这一行
 client_qa = pymongo.MongoClient().quantaxis.joblog
 client_joblist = pymongo.MongoClient().quantaxis.joblist
@@ -162,9 +162,9 @@ def monitor_daily(self):
     """
     scan work/ report
     """
-    daily_job().execute()
+    pass
 
 
 @app.task(bind=True)
 def monitor_trading(self):
-    realtime_job().execute()
+    pass
