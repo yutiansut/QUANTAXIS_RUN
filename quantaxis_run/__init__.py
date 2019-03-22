@@ -69,7 +69,7 @@ app.config_from_object(celeryconfig)
 def quantaxis_run(self, shell_cmd, program='python'):
 
     filename = shell_cmd
-    shell_cmd = '{} "{}"'.format(program, shell_cmd)
+    shell_cmd = '{} "{}" --taskid {}'.format(program, shell_cmd, self.request.id)
 
     client_qa.insert({
         'job_id': str(self.request.id),
@@ -115,7 +115,7 @@ def quantaxis_run(self, shell_cmd, program='python'):
 def run_shell(self, shell_cmd):
 
     filename = shell_cmd
-    shell_cmd = '{}'.format(shell_cmd)
+    shell_cmd = '{} --taskid {}'.format(shell_cmd, self.request.id)
 
     client_qa.insert({
         'job_id': str(self.request.id),
