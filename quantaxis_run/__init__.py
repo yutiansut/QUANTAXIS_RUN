@@ -15,7 +15,8 @@ import datetime
 platforms.C_FORCE_ROOT = True  # 加上这一行
 client_qa = pymongo.MongoClient().quantaxis.joblog
 client_joblist = pymongo.MongoClient().quantaxis.joblist
-client_qa.create_index('filename')
+client_qa.create_index([('filename', pymongo.ASCENDING),
+                        ('job_id', pymongo.ASCENDING), ('time', pymongo.ASCENDING)])
 
 
 schedule_client = pymongo.MongoClient().quantaxis.schedule
