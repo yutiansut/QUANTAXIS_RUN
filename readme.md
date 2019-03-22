@@ -2,7 +2,21 @@
 
 quantaxis_run 是基于celery的分布式回测运行代码
 
-attenion: 此模块已经被QUANTAXIS_WEBSERVER集成
+- attention: 此模块已经被QUANTAXIS_WEBSERVER集成
+
+- attention: 最新版本需要让你的任务都支持一个 --taskid 的参数 用于传输你的任务号
+
+写法
+
+```
+import click
+
+@click.command()
+@click.option('--taskid',default='xxxxx')
+def 你的函数():
+    pass
+```
+
 
 ```
 POST: http://localhost:8010/command/jobmapper?jobfile=E:\\AGModel\\temp_teststrategy.py
