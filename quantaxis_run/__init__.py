@@ -13,13 +13,11 @@ import pymongo
 import datetime
 
 platforms.C_FORCE_ROOT = True  # 加上这一行
-client_qa = pymongo.MongoClient(connect=False).quantaxis.joblog
-client_joblist = pymongo.MongoClient(connect=False).quantaxis.joblist
-client_qa.create_index([('filename', pymongo.ASCENDING),
-                        ('job_id', pymongo.ASCENDING), ('time', pymongo.ASCENDING)])
 
 
-schedule_client = pymongo.MongoClient(connect=False).quantaxis.schedule
+
+
+
 """schedule
 
 
@@ -68,7 +66,10 @@ app.config_from_object(celeryconfig)
 
 @app.task(bind=True)
 def quantaxis_run(self, shell_cmd, program='python'):
-
+    client_joblist = pymongo.MongoClient(connect=False).quantaxis.joblist
+    client_qa = pymongo.MongoClient(connect=False).quantaxis.joblog
+    client_qa.create_index([('filename', pymongo.ASCENDING),
+                            ('job_id', pymongo.ASCENDING), ('time', pymongo.ASCENDING)])
     filename = shell_cmd
     shell_cmd = '{} "{}" --taskid {}'.format(program, shell_cmd, self.request.id)
 
@@ -114,7 +115,10 @@ def quantaxis_run(self, shell_cmd, program='python'):
 
 @app.task(bind=True)
 def run_shell(self, shell_cmd):
-
+    client_joblist = pymongo.MongoClient(connect=False).quantaxis.joblist
+    client_qa = pymongo.MongoClient(connect=False).quantaxis.joblog
+    client_qa.create_index([('filename', pymongo.ASCENDING),
+                            ('job_id', pymongo.ASCENDING), ('time', pymongo.ASCENDING)])
     filename = shell_cmd
     shell_cmd = '{} --taskid {}'.format(shell_cmd, self.request.id)
 
