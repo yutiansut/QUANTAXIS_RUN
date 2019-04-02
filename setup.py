@@ -32,7 +32,7 @@ LICENSE = "MIT"
 
 setup(
     name=NAME,
-    version='1.5',
+    version='1.8',
     description=DESCRIPTION,
     long_description='automatic run quantaxis program',
     classifiers=[
@@ -41,7 +41,7 @@ setup(
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
     ],
-    install_requires=['celery', 'quantaxis>=1.3.1'],
+    install_requires=['celery>4', 'quantaxis>=1.3.1'],
     keywords=KEYWORDS,
     author=AUTHOR,
     author_email=AUTHOR_EMAIL,
