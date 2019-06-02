@@ -65,14 +65,16 @@ app.config_from_object(celeryconfig)
 
 
 @app.task(bind=True)
-def quantaxis_run(self, shell_cmd, program='python'):
+def quantaxis_run(self, shell_cmd, program='python', taskid=True):
     client_joblist = pymongo.MongoClient(connect=False).quantaxis.joblist
     client_qa = pymongo.MongoClient(connect=False).quantaxis.joblog
     client_qa.create_index([('filename', pymongo.ASCENDING),
                             ('job_id', pymongo.ASCENDING), ('time', pymongo.ASCENDING)])
     filename = shell_cmd
-    shell_cmd = '{} "{}" --taskid {}'.format(program, shell_cmd, self.request.id)
-
+    if taskid:
+        shell_cmd = '{} "{}" --taskid {}'.format(program, shell_cmd, self.request.id)
+    else:
+        shell_cmd = '{} "{}"'.format(program, shell_cmd)
     client_qa.insert({
         'job_id': str(self.request.id),
         'source': program,
