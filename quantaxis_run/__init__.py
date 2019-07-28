@@ -26,7 +26,7 @@ platforms.C_FORCE_ROOT = True  # 加上这一行
 4. 
 
 """
-
+print(qarun_amqp)
 
 class celeryconfig():
     broker_url = qarun_amqp   # 使用redis存储任务队列
