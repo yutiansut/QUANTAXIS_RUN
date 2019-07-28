@@ -6,8 +6,8 @@ quantaxis_run 是基于celery的分布式回测运行代码
 
 ENV 环境变量
 
-- QARUN_AMQP :pyamqp://guest:guest@localhost:5672//
-
+- QARUN_AMQP: pyamqp://guest:guest@localhost:5672//
+- MONGODB: localhost
 
 
 - attention: 此模块已经被QUANTAXIS_WEBSERVER集成

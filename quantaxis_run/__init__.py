@@ -3,7 +3,7 @@
 from celery import Celery, platforms
 from celery.schedules import crontab
 from datetime import timedelta
-from quantaxis_run.setting import qarun_amqp
+from quantaxis_run.setting import qarun_amqp, qarun_mongo_ip
 # celery beat
 
 import os
@@ -14,9 +14,6 @@ import pymongo
 import datetime
 
 platforms.C_FORCE_ROOT = True  # 加上这一行
-
-
-
 
 
 """schedule
@@ -32,7 +29,7 @@ platforms.C_FORCE_ROOT = True  # 加上这一行
 
 
 class celeryconfig():
-    broker_url = "pyamqp://"   # 使用redis存储任务队列
+    broker_url = qarun_amqp   # 使用redis存储任务队列
     RESULT_BACKEND = "rpc://"  # 使用redis存储结果
     task_default_queue = 'default'
     task_serializer = 'json'
@@ -59,7 +56,7 @@ class celeryconfig():
     }
 
 
-app = Celery('quantaxis_run', backend='rpc://', broker='pyamqp://')
+app = Celery('quantaxis_run', backend='rpc://', broker=qarun_amqp)
 app.config_from_object(celeryconfig)
 
 # A task being bound means the first argument to the task will always be the task instance (self), just like Python bound methods:
@@ -67,13 +64,16 @@ app.config_from_object(celeryconfig)
 
 @app.task(bind=True)
 def quantaxis_run(self, shell_cmd, program='python', taskid=True):
-    client_joblist = pymongo.MongoClient(connect=False).quantaxis.joblist
-    client_qa = pymongo.MongoClient(connect=False).quantaxis.joblog
+    client_joblist = pymongo.MongoClient(
+        host=qarun_mongo_ip, connect=False).quantaxis.joblist
+    client_qa = pymongo.MongoClient(
+        host=qarun_mongo_ip, connect=False).quantaxis.joblog
     client_qa.create_index([('filename', pymongo.ASCENDING),
                             ('job_id', pymongo.ASCENDING), ('time', pymongo.ASCENDING)])
     filename = shell_cmd
     if taskid:
-        shell_cmd = '{} "{}" --taskid {}'.format(program, shell_cmd, self.request.id)
+        shell_cmd = '{} "{}" --taskid {}'.format(
+            program, shell_cmd, self.request.id)
     else:
         shell_cmd = '{} "{}"'.format(program, shell_cmd)
     client_qa.insert({
@@ -118,8 +118,10 @@ def quantaxis_run(self, shell_cmd, program='python', taskid=True):
 
 @app.task(bind=True)
 def run_shell(self, shell_cmd):
-    client_joblist = pymongo.MongoClient(connect=False).quantaxis.joblist
-    client_qa = pymongo.MongoClient(connect=False).quantaxis.joblog
+    client_joblist = pymongo.MongoClient(
+        host=qarun_mongo_ip, connect=False).quantaxis.joblist
+    client_qa = pymongo.MongoClient(
+        host=qarun_mongo_ip, connect=False).quantaxis.joblog
     client_qa.create_index([('filename', pymongo.ASCENDING),
                             ('job_id', pymongo.ASCENDING), ('time', pymongo.ASCENDING)])
     filename = shell_cmd
