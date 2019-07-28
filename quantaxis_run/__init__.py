@@ -3,6 +3,7 @@
 from celery import Celery, platforms
 from celery.schedules import crontab
 from datetime import timedelta
+from quantaxis_run.setting import qarun_amqp
 # celery beat
 
 import os
