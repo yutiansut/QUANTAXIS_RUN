@@ -41,7 +41,7 @@ setup(
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
     ],
-    install_requires=['celery>4', 'quantaxis>=1.3.1'],
+    install_requires=['celery>4', 'quantaxis>=1.3.1', 'qaenv'],
     keywords=KEYWORDS,
     author=AUTHOR,
     author_email=AUTHOR_EMAIL,
